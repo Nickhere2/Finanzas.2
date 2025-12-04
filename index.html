@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finanzas Google Sheets</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js"></script>
+</head>
+<body class="dark">
+    <div class="container mx-auto max-w-4xl p-4 pb-24">
+        <header class="flex justify-between items-center mb-6">
+            <h1 class="text-3xl font-bold text-cyan-400">Mis Finanzas</h1>
+            <button id="btn-settings" class="p-2 rounded-full hover:bg-gray-700">⚙️</button>
+        </header>
+        
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-4">Resumen</h2>
+            <div class="grid grid-cols-3 gap-4">
+                <div class="bg-gray-800 p-4 rounded-lg">
+                    <p class="text-gray-400 text-sm">Balance (Hoy)</p>
+                    <p id="balance-today" class="text-2xl font-bold">$ 0,00</p>
+                </div>
+                <div class="bg-gray-800 p-4 rounded-lg">
+                    <p class="text-gray-400 text-sm">Balance (Este Mes)</p>
+                    <p id="balance-month" class="text-2xl font-bold">$ 0,00</p>
+                </div>
+                <div class="bg-gray-800 p-4 rounded-lg">
+                    <p class="text-gray-400 text-sm">Proyección (Este Mes)</p>
+                    <p id="projection-month" class="text-2xl font-bold">$ 0,00</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-4">Movimientos del Día</h2>
+            <div id="today-list" class="space-y-3">
+                <p class="text-gray-400 text-center py-4">No hay movimientos hoy.</p>
+            </div>
+        </section>
+        
+        <section>
+            <h2 class="text-xl font-semibold mb-4">Historial</h2>
+            <div class="overflow-x-auto bg-gray-800 p-4 rounded-lg">
+                <table class="min-w-full">
+                    <thead class="border-b border-gray-600">
+                        <tr>
+                            <th class="py-2 px-4 text-left">Fecha</th>
+                            <th class="py-2 px-4 text-left">Categoría</th>
+                            <th class="py-2 px-4 text-left">Nota</th>
+                            <th class="py-2 px-4 text-right">Monto</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-table-body"></tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+    
+    <button id="btn-add-movement" class="fixed bottom-6 right-6 bg-cyan-600 hover:bg-cyan-700 text-white rounded-full p-4 shadow-lg text-2xl">+</button>
+    
+    <!-- Modal de Configuración -->
+    <div id="settings-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+        <div class="bg-gray-800 w-full max-w-md p-6 rounded-lg">
+            <h3 class="text-2xl font-semibold mb-6">Configurar Google Sheet</h3>
+            <form id="settings-form" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium mb-1">ID del Google Sheet</label>
+                    <input type="text" id="sheet-id" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2" placeholder="Pega el ID de tu Sheet">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">URL de Apps Script (Web App)</label>
+                    <input type="text" id="script-url" class="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2" placeholder="https://script.google.com/...">
+                </div>
+                <div class="flex gap-4">
+                    <button type="button" class="w-full py-2 px-4 rounded bg-gray-700 hover:bg-gray-600">Cancelar</button>
+                    <button type="submit" class="w-full py-2 px-4 rounded bg-cyan-600 hover:bg-cyan-700 text-white">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        const appState = {
+            movements: [],
+            config: {
+                sheetId: localStorage.getItem('sheetId') || '',
+                scriptUrl: localStorage.getItem('scriptUrl') || ''
+            }
+        };
+        
+        // Elementos del DOM
+        const balanceToday = document.getElementById('balance-today');
+        const balanceMonth = document.getElementById('balance-month');
+        const projectionMonth = document.getElementById('projection-month');
+        const todayList = document.getElementById('today-list');
+        const historyBody = document.getElementById('history-table-body');
+        const btnAdd = document.getElementById('btn-add-movement');
+        const btnSettings = document.getElementById('btn-settings');
+        const settingsModal = document.getElementById('settings-modal');
+        const settingsForm = document.getElementById('settings-form');
+        
+        function renderDashboard() {
+            // TODO: Implementar cálculos
+        }
+        
+        function renderAll() {
+            renderDashboard();
+        }
+        
+        btnSettings.addEventListener('click', () => {
+            document.getElementById('sheet-id').value = appState.config.sheetId;
+            document.getElementById('script-url').value = appState.config.scriptUrl;
+            settingsModal.classList.remove('hidden');
+        });
+        
+        settingsForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            appState.config.sheetId = document.getElementById('sheet-id').value;
+            appState.config.scriptUrl = document.getElementById('script-url').value;
+            localStorage.setItem('sheetId', appState.config.sheetId);
+            localStorage.setItem('scriptUrl', appState.config.scriptUrl);
+            settingsModal.classList.add('hidden');
+            alert('Configuración guardada. Usa las instrucciones en la consola para crear tu Google Apps Script.');
+        });
+        
+        btnAdd.addEventListener('click', () => {
+            alert('Función de agregar movimiento - por implementar');
+        });
+    </script>
+</body>
+</html>
