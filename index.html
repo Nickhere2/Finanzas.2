@@ -165,8 +165,26 @@
             render();
             e.target.reset();
         });
+         
+ async function loadMovementsFromSheet() {
+ try {
+ const res = await fetch(SCRIPT_URL);
+ const json = await res.json();
+ appState.movements = json.movements.map(m => ({
+ date: new Date(m.date),
+ type: m.type,
+ amount: Number(m.amount),
+ category: m.category,
+ note: m.note || '',
+ id: Date.now() + Math.random()
+ }));
+ render();
+ } catch (e) {
+ console.error('Error leyendo de Google Sheets:', e);
+ }
+ }
 
-        render();
+        loadMovementsFromSheet();
     </script>
 </body>
 </html>
