@@ -91,7 +91,6 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzZ_J_bPXir0G1eHEq7G
                     date: data.date,
                     type: data.type,
                     amount: data.amount,
-                    category: data.category,
                     note: data.note
                 }),
                 headers: { 'Content-Type': 'application/json' },
@@ -120,7 +119,7 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzZ_J_bPXir0G1eHEq7G
                 list.innerHTML = todayMovements.map(m => `
                     <div class="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
                         <div>
-                            <p class="font-semibold">${m.category}</p>
+                            <p class="font-semibold">${m.type}</p>
                             <p class="text-sm text-gray-600">${m.note || '-'}</p>
                         </div>
                         <p class="text-lg font-bold ${m.type === 'ingreso' ? 'text-green-600' : 'text-red-600'}">                        
@@ -151,23 +150,22 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzZ_J_bPXir0G1eHEq7G
             e.target.reset();
         });
          
- async function loadMovementsFromSheet() {
- try {
- const res = await fetch(SCRIPT_URL);
- const json = await res.json();
- appState.movements = json.movements.map(m => ({
- date: new Date(m.date),
- type: m.type,
- amount: Number(m.amount),
- category: m.category,
- note: m.note || '',
- id: Date.now() + Math.random()
- }));
- render();
- } catch (e) {
- console.error('Error leyendo de Google Sheets:', e);
- }
- }
+async function loadMovementsFromSheet() {
+    try {
+      const res = await fetch(SCRIPT_URL);
+      const json = await res.json();
+      appState.movements = json.movements.map(m => ({
+        date: new Date(m.date),
+        type: m.type,
+        amount: Number(m.amount),
+        note: m.note || '',
+        id: Date.now() + Math.random()
+      }));
+      render();
+    } catch (e) {
+      console.error('Error leyendo de Google Sheets:', e);
+    }
+  }
 
         loadMovementsFromSheet();
     </script>
