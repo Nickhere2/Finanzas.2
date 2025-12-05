@@ -1,95 +1,91 @@
 # Finanzas.2 - Gestor de Finanzas con Google Sheets
 
-App web sencilla para gestionar movimientos de caja y guardar datos directamente en Google Sheets.
+App web sencilla para gestionar movimientos de caja y guardar datos **PERMANENTEMENTE** en Google Sheets.
 
-## ¿Qué necesitas?
+## ✨ CARACTERÍSTICAS
 
-1. Un Google Sheet (hoja de cálculos)
-2. Un Google Apps Script conectado a ese Sheet
-3. Esta web app (index.html)
+✅ Interfaz bonita y responsive
+✅ Agregar ingresos y egresos
+✅ Calcular balance del día en tiempo real
+✅ **Datos guardados PERMANENTEMENTE en Google Sheet**
+✅ Sin problemas de CORS
+✅ Funciona en cualquier navegador
 
-## Paso 1: Crear el Google Sheet
+## 🚀 CÓMO EMPEZAR
 
-1. Ve a [Google Sheets](https://sheets.google.com/)
-2. Crea una nueva hoja
-3. Copia el ID del Sheet (en la URL: `https://docs.google.com/spreadsheets/d/ID_AQUI/edit`)
+### Opción 1: Usar la app directamente (sin configuración)
 
-## Paso 2: Crear el Google Apps Script
+Va a https://nickhere2.github.io/Finanzas.2/ y empieza a agregar movimientos. **NOTA:** Los datos se guardarán en memoria local pero SE PERDERÁN si limpias el cache.
 
-1. En tu Google Sheet, ve a: **Extensiones > Apps Script**
-2. Reemplaza todo el código con esto:
+### Opción 2: Configurar para guardar en Google Sheets (RECOMENDADO)
 
-```javascript
-const SHEET_NAME = 'Movimientos';
+Para que los datos se guarden **PERMANENTEMENTE** en tu Google Sheet:
 
-function doGet() {
-  return HtmlService.createHtmlOutput('Web app del Google Sheets conectada');
-}
+1. Lee el archivo `SETUP_GOOGLE_FORM.md` en este repositorio
+2. Sigue los pasos para crear un Google Form
+3. Actualiza el código con tus IDs
+4. ¡Listo! Los datos se guardarán automáticamente
 
-function doPost(e) {
-  try {
-    const sheet = SpreadsheetApp.getActiveSheet();
-    const data = JSON.parse(e.postData.contents);
-    
-    // Añadir fila con los datos
-    sheet.appendRow([
-      data.date,
-      data.type,
-      data.amount,
-      data.category,
-      data.note
-    ]);
-    
-    return ContentService.createTextOutput(JSON.stringify({ok: true})).setMimeType(ContentService.MimeType.JSON);
-  } catch (error) {
-    return ContentService.createTextOutput(JSON.stringify({ok: false, error: error.toString()})).setMimeType(ContentService.MimeType.JSON);
-  }
-}
+**⏱️ Tiempo estimado: 10 minutos**
 
-function getData() {
-  const sheet = SpreadsheetApp.getActiveSheet();
-  const data = sheet.getDataRange().getValues();
-  return data;
-}
+## 📋 Requisitos
+
+- Una cuenta de Google (para Google Sheets y Forms)
+- Un navegador moderno
+- Nada más
+
+## 🔧 Configuración
+
+Ver archivo: `SETUP_GOOGLE_FORM.md`
+
+Este archivo contiene:
+- Paso a paso para crear el Google Form
+- Cómo obtener los Entry IDs
+- Cómo actualizar la app
+- Solución de problemas
+
+## 📁 Estructura del proyecto
+
+```
+Finanzas.2/
+├── index.html              # App principal
+├── README.md               # Este archivo
+└── SETUP_GOOGLE_FORM.md    # Guía de configuración (LÉEME PRIMERO)
 ```
 
-3. Guarda el proyecto
-4. Ve a **Desplegar > Nuevo despliegue**
-5. Selecciona "Aplicación web"
-6. Elige "Ejecutar como: [tu email]"
-7. "Ejecutar como: Cualquiera"
-8. Copia la URL que te da (sera como: `https://script.google.com/macros/d/.../usercontent`)
+## 🔐 Privacidad y Seguridad
 
-## Paso 3: Configurar en la Web App
+- Los datos se guardan en TU Google Sheet personal
+- La app NO guarda datos en servidores externos
+- Usamos Google Forms para enviar datos (método seguro y confiable)
+- Todo el código es JavaScript - puedes revisar qué hace
 
-1. Abre el archivo `index.html` en tu navegador
-2. Haz clic en el icono de engranaje (settings)
-3. Pega:
-   - **ID del Google Sheet**: El ID que copiaste en el Paso 1
-   - **URL de Apps Script**: La URL del despliegue del Paso 2
-4. Guarda
+## 💡 Cómo funciona
 
-## Uso
+1. **Frontend (tu navegador):** Interfaz para agregar movimientos
+2. **Google Form:** Recibe y procesa los datos
+3. **Google Sheet:** Almacena los datos de forma permanente
 
-- **+** Boton flotante: Agregar un nuevo movimiento
-- **Resúmen**: Ve tu balance diario, mensual y proyección
-- **Historial**: Tabla con todos los movimientos registrados
-- **Engranaje**: Cambiar configuración
+Este método **EVITA problemas de CORS** y garantiza que los datos se guarden siempre.
 
-## Notas
+## 🆘 Problemas Comunes
 
-- Los datos se guardan localmente primero y se sincronizan con Google Sheets
-- Si Google Sheets no está disponible, los datos se mantienen localmente
-- El Apps Script debe estar "Activo" para que funcione
+**P: ¿Los datos se pierden si cierro el navegador?**
+R: SÍ, a menos que hayas configurado el Google Form. Lee `SETUP_GOOGLE_FORM.md`
 
-## Customización
+**P: ¿Puedo usar mi Google Sheet existente?**
+R: SÍ, crea un Google Form, conéctalo a tu Sheet y luego copia los Entry IDs
 
-Puedes editar `index.html` para:
-- Cambiar colores
-- Agregar más campos
-- Modificar categorías
+**P: ¿Qué hago si aparece un error?**
+R: Abre la consola (F12) y busca mensajes de error. Verifica que los Entry IDs sean correctos.
 
----
+## 📞 Soporte
 
-**Creado por:** [Tu nombre]
-**Última actualización:** Diciembre 2024
+Si tienes problemas:
+1. Verifica que todos los Entry IDs estén correctos
+2. Abre la consola del navegador (F12) y busca errores
+3. Asegúrate de que el Google Form esté conectado al Sheet
+
+## 📄 Licencia
+
+MIT - Usa libremente para tus proyectos
