@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Finanzas - Google Sheets</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js"></script>
   <style>
     body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
@@ -67,9 +66,8 @@
   </div>
 
   <script>
-    // Config
-    const SHEET_ID = '117V0GVbANO-f2lbBbtKMX8T7kMkT4gM2TbZbRiTctHU';
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzAO21eDJz-qkHM2DX0u7r3ANJmNW4K_ai0h16CmleqfGU3jYW52CYnWobNaUTBsAQbhg0BvGQUWXD2jb6HvdNF1GYcgET0D1ZN3eqQsxZnr6_qHsjPrf202sRBGI1s0vAOjyWBgtlz5iiwFKiMMR2n8ldE-rHJo4UanaA0s0tGVc1ggDglsp52dEsVg-QhRrhsct_34cmgxWN0zBKEd0wlVw0aGZVD7U11B6BuP5T5gDg/exec';
+    // Google Form URL - REEMPLAZA CON TU URL DE FORM
+    const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSc-test-URL-HERE/formResponse';
     
     const appState = {
       movements: []
@@ -84,18 +82,21 @@
     function saveMovement(data) {
       appState.movements.push({...data, id: Date.now()});
       
-      // Enviar a Google Sheets
-      fetch(SCRIPT_URL, {
-        method: 'POST',
-        body: new URLSearchParams(data)({
-          date: data.date,
-          type: data.type,
-          amount: data.amount,
-          note: data.note
-        }),
-        headers: { 'Content-Type': 'application/json' },
-        
-      }).catch(e => console.error('Error enviando a Google Sheets:', e));
+      // Enviar a Google Form (NO usa fetch, evita CORS)
+      const formData = new FormData();
+      formData.append('entry.1234567890', data.date);      // Reemplaza con tu entry ID de Fecha
+      formData.append('entry.1234567891', data.type);      // Reemplaza con tu entry ID de Tipo
+      formData.append('entry.1234567892', data.amount);    // Reemplaza con tu entry ID de Monto
+      formData.append('entry.1234567893', data.note);      // Reemplaza con tu entry ID de Nota
+      
+      // Esto crea una imagen invisible que hace el submit (evita CORS)
+      const img = new Image();
+      img.src = GOOGLE_FORM_URL + '?' + new URLSearchParams({
+        'entry.1234567890': data.date,
+        'entry.1234567891': data.type,
+        'entry.1234567892': data.amount,
+        'entry.1234567893': data.note
+      }).toString();
     }
     
     function render() {
@@ -147,24 +148,7 @@
       e.target.reset();
     });
     
-    async function loadMovementsFromSheet() {
-      try {
-        const res = await fetch(SCRIPT_URL);
-        const json = await res.json();
-        appState.movements = json.movements.map(m => ({
-          date: new Date(m.date),
-          type: m.type,
-          amount: Number(m.amount),
-          note: m.note || '',
-          id: Date.now() + Math.random()
-        }));
-        render();
-      } catch (e) {
-        console.error('Error leyendo de Google Sheets:', e);
-      }
-    }
-    
-    loadMovementsFromSheet();
+    render();
   </script>
 </body>
 </html>
