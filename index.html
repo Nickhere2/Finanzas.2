@@ -76,11 +76,9 @@
     function saveMovement(data) {
     fetch(APPS_SCRIPT_URL, {
       method: 'POST',
-      mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         fecha: data.fecha,
-      tipo: data.type,        monto: data.amount,
         nota: data.note
       })
     }).catch(err => console.log('Sincronización:', err));
