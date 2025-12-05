@@ -70,7 +70,7 @@
     <script>
         // Config
         const SHEET_ID = '117V0GVbANO-f2lbBbtKMX8T7kMkT4gM2TbZbRiTctHU';
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzroG-LwxQN9_CSkmnLleDrVqojW8ASOWRIYfb07oCklcvWefd3s0NxmSXYs4uL0_7xEQ/exec';        const appState = {
+const https://script.google.com/macros/s/AKfycbzwufmDglsp52dEsVg-QhRrhsct_34cmgxWN0zBKEd0wlVw0aG2VD7U11B6BuP5T5gDg/usercontent = 'https://script.google.com/macros/s/AKfycbzroG-LwxQN9_CSkmnLleDrVqojW8ASOWRIYfb07oCklcvWefd3s0NxmSXYs4uL0_7xEQ/exec';        const appState = {
             movements: []
         };
 
@@ -84,7 +84,7 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzroG-LwxQN9_CSkmnLl
             appState.movements.push({...data, id: Date.now()});
 
             // Enviar a Google Sheets
-            fetch(SCRIPT_URL, {
+            fetch(https://script.google.com/macros/s/AKfycbzwufmDglsp52dEsVg-QhRrhsct_34cmgxWN0zBKEd0wlVw0aG2VD7U11B6BuP5T5gDg/usercontent, {
                 method: 'POST',
                 body: JSON.stringify({
                     date: data.date,
@@ -150,7 +150,7 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzroG-LwxQN9_CSkmnLl
          
 async function loadMovementsFromSheet() {
     try {
-      const res = await fetch(SCRIPT_URL);
+      const res = await fetch(https://script.google.com/macros/s/AKfycbzwufmDglsp52dEsVg-QhRrhsct_34cmgxWN0zBKEd0wlVw0aG2VD7U11B6BuP5T5gDg/usercontent);
       const json = await res.json();
       appState.movements = json.movements.map(m => ({
         date: new Date(m.date),
