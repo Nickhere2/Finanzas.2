@@ -1,171 +1,170 @@
 <!DOCTYPE html>
 <html lang="es" class="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finanzas - Google Sheets</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js"></script>
-    <style>
-        body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finanzas - Google Sheets</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js"></script>
+  <style>
+    body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+  </style>
 </head>
 <body class="dark">
-    <div class="container mx-auto max-w-4xl p-4 pb-24">
-        <header class="flex justify-between items-center mb-6">
-            <h1 class="text-3xl font-bold text-white mb-2">Finanzas</h1>
-            <button id="btn-settings" class="p-2 rounded-full hover:bg-gray-700" ></button>
-        </header>
+  <div class="container mx-auto max-w-4xl p-4 pb-24">
+    <header class="flex justify-between items-center mb-6">
+      <h1 class="text-3xl font-bold text-white mb-2">Finanzas</h1>
+      <button id="btn-settings" class="p-2 rounded-full hover:bg-gray-700"></button>
+    </header>
 
-        <section class="mb-8">
-            <h2 class="text-xl font-semibold mb-4">Resumen</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                <div class="bg-white rounded-lg p-6 shadow-lg">
-                    <p class="text-gray-600 text-sm mb-2">Balance Hoy</p>
-                    <p id="balance-today" class="text-3xl font-bold text-blue-600">$0.00</p>
-                </div>
-                <div class="bg-white rounded-lg p-6 shadow-lg">
-                    <p class="text-gray-600 text-sm mb-2">Balance Mes</p>
-                    <p class="text-3xl font-bold text-blue-600">$0.00</p>
-                </div>
-                <div class="bg-white rounded-lg p-6 shadow-lg">
-                    <p class="text-gray-600 text-sm mb-2">Proyección</p>
-                    <p class="text-3xl font-bold text-blue-600">$0.00</p>
-                </div>
-            </div>
-        </section>
+    <section class="mb-8">
+      <h2 class="text-xl font-semibold mb-4">Resumen</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        <div class="bg-white rounded-lg p-6 shadow-lg">
+          <p class="text-gray-600 text-sm mb-2">Balance Hoy</p>
+          <p id="balance-today" class="text-3xl font-bold text-blue-600">$0.00</p>
+        </div>
+        <div class="bg-white rounded-lg p-6 shadow-lg">
+          <p class="text-gray-600 text-sm mb-2">Balance Mes</p>
+          <p class="text-3xl font-bold text-blue-600">$0.00</p>
+        </div>
+        <div class="bg-white rounded-lg p-6 shadow-lg">
+          <p class="text-gray-600 text-sm mb-2">Proyección</p>
+          <p class="text-3xl font-bold text-blue-600">$0.00</p>
+        </div>
+      </div>
+    </section>
 
-        <section class="mb-8">
-            <h2 class="text-xl font-semibold mb-4">Agregar Movimiento</h2>
-            <form id="movement-form" class="bg-white rounded-lg p-6 shadow-lg">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Tipo</label>
-                        <select id="type" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required>
-                            <option value="ingreso">Ingreso</option>
-                            <option value="egreso">Egreso</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Monto</label>
-                        <input type="number" id="amount" step="0.01" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="0.00" required>
-                    </div>
-                </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Nota (opcional)</label>
-                        <input type="text" id="note" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Añade una nota...">
-                    </div>
-                </div>
-                <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">Agregar Movimiento</button>
-            </form>
-        </section>
+    <section class="mb-8">
+      <h2 class="text-xl font-semibold mb-4">Agregar Movimiento</h2>
+      <form id="movement-form" class="bg-white rounded-lg p-6 shadow-lg">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Tipo</label>
+            <select id="type" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required>
+              <option value="ingreso">Ingreso</option>
+              <option value="egreso">Egreso</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Monto</label>
+            <input type="number" id="amount" step="0.01" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="0.00" required>
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Nota (opcional)</label>
+          <input type="text" id="note" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Añade una nota...">
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">Agregar Movimiento</button>
+      </form>
+    </section>
 
-        <section>
-            <h2 class="text-xl font-semibold mb-4">Movimientos de Hoy</h2>
-            <div id="movements-list" class="space-y-3"></div>
-        </section>
-    </div>
+    <section>
+      <h2 class="text-xl font-semibold mb-4">Movimientos de Hoy</h2>
+      <div id="movements-list" class="space-y-3"></div>
+    </section>
+  </div>
 
-    <script>
-        // Config
-        const SHEET_ID = '117V0GVbANO-f2lbBbtKMX8T7kMkT4gM2TbZbRiTctHU';
-const https://script.google.com/macros/s/AKfycbzwufmDglsp52dEsVg-QhRrhsct_34cmgxWN0zBKEd0wlVw0aG2VD7U11B6BuP5T5gDg/usercontent = 'https://script.google.com/macros/s/AKfycbzroG-LwxQN9_CSkmnLleDrVqojW8ASOWRIYfb07oCklcvWefd3s0NxmSXYs4uL0_7xEQ/exec';        const appState = {
-            movements: []
-        };
-
-        const $ = id => document.getElementById(id);
-
-        function formatCurrency(n) {
-            return new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(n);
-        }
-
-        function saveMovement(data) {
-            appState.movements.push({...data, id: Date.now()});
-
-            // Enviar a Google Sheets
-            fetch(https://script.google.com/macros/s/AKfycbzwufmDglsp52dEsVg-QhRrhsct_34cmgxWN0zBKEd0wlVw0aG2VD7U11B6BuP5T5gDg/usercontent, {
-                method: 'POST',
-                body: JSON.stringify({
-                    date: data.date,
-                    type: data.type,
-                    amount: data.amount,
-                    note: data.note
-                }),
-                headers: { 'Content-Type': 'application/json' },
-                mode: 'no-cors'
-            }).catch(e => console.error('Error enviando a Google Sheets:', e));
-        }
-
-        function render() {
-            const today = dayjs().format('YYYY-MM-DD');
-            const todayMovements = appState.movements.filter(m => dayjs(m.date).format('YYYY-MM-DD') === today);
-
-            let todayBalance = 0;
-            todayMovements.forEach(m => {
-                if (m.type === 'ingreso')
-                    todayBalance += m.amount;
-                else
-                    todayBalance -= m.amount;
-            });
-
-            $('balance-today').textContent = formatCurrency(todayBalance);
-
-            const list = $('movements-list');
-            if (todayMovements.length === 0) {
-                list.innerHTML = '<p class="text-gray-500 text-center py-4">No hay movimientos registrados</p>';
-            } else {
-                list.innerHTML = todayMovements.map(m => `
-                    <div class="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
-                        <div>
-                            <p class="font-semibold">${m.type}</p>
-                            <p class="text-sm text-gray-600">${m.note || '-'}</p>
-                        </div>
-                        <p class="text-lg font-bold ${m.type === 'ingreso' ? 'text-green-600' : 'text-red-600'}">                        
-                            ${m.type === 'ingreso' ? '+' : '-'}${formatCurrency(m.amount)}
-                        </p>
-                    </div>
-                `).join('');
-            }
-        }
-
-        $('movement-form').addEventListener('submit', e => {
-            e.preventDefault();
-            const data = {
-                type: $('type').value,
-                amount: parseFloat($('amount').value),
-                note: $('note').value,
-                date: new Date().toISOString()
-            };
-
-            if (data.amount <= 0) {
-                alert('El monto debe ser mayor a 0');
-                return;
-            }
-
-            saveMovement(data);
-            render();
-            e.target.reset();
-        });
-         
-async function loadMovementsFromSheet() {
-    try {
-      const res = await fetch(https://script.google.com/macros/s/AKfycbzwufmDglsp52dEsVg-QhRrhsct_34cmgxWN0zBKEd0wlVw0aG2VD7U11B6BuP5T5gDg/usercontent);
-      const json = await res.json();
-      appState.movements = json.movements.map(m => ({
-        date: new Date(m.date),
-        type: m.type,
-        amount: Number(m.amount),
-        note: m.note || '',
-        id: Date.now() + Math.random()
-      }));
-      render();
-    } catch (e) {
-      console.error('Error leyendo de Google Sheets:', e);
+  <script>
+    // Config
+    const SHEET_ID = '117V0GVbANO-f2lbBbtKMX8T7kMkT4gM2TbZbRiTctHU';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzroG-LwxQN9_CSkmnLleDrVqojW8ASOWRIYfb07oCklcvWefd3s0NxmSXYs4uL0_7xEQ/exec';
+    
+    const appState = {
+      movements: []
+    };
+    
+    const $ = id => document.getElementById(id);
+    
+    function formatCurrency(n) {
+      return new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(n);
     }
-  }
-
-        loadMovementsFromSheet();
-    </script>
+    
+    function saveMovement(data) {
+      appState.movements.push({...data, id: Date.now()});
+      
+      // Enviar a Google Sheets
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        body: JSON.stringify({
+          date: data.date,
+          type: data.type,
+          amount: data.amount,
+          note: data.note
+        }),
+        headers: { 'Content-Type': 'application/json' },
+        mode: 'no-cors'
+      }).catch(e => console.error('Error enviando a Google Sheets:', e));
+    }
+    
+    function render() {
+      const today = dayjs().format('YYYY-MM-DD');
+      const todayMovements = appState.movements.filter(m => dayjs(m.date).format('YYYY-MM-DD') === today);
+      
+      let todayBalance = 0;
+      todayMovements.forEach(m => {
+        if (m.type === 'ingreso') todayBalance += m.amount;
+        else todayBalance -= m.amount;
+      });
+      
+      $('balance-today').textContent = formatCurrency(todayBalance);
+      
+      const list = $('movements-list');
+      if (todayMovements.length === 0) {
+        list.innerHTML = '<p class="text-gray-500 text-center py-4">No hay movimientos registrados</p>';
+      } else {
+        list.innerHTML = todayMovements.map(m => `
+          <div class="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
+            <div>
+              <p class="font-semibold">${m.type}</p>
+              <p class="text-sm text-gray-600">${m.note || '-'}</p>
+            </div>
+            <p class="text-lg font-bold ${m.type === 'ingreso' ? 'text-green-600' : 'text-red-600'}">
+              ${m.type === 'ingreso' ? '+' : '-'}${formatCurrency(m.amount)}
+            </p>
+          </div>
+        `).join('');
+      }
+    }
+    
+    $('movement-form').addEventListener('submit', e => {
+      e.preventDefault();
+      const data = {
+        type: $('type').value,
+        amount: parseFloat($('amount').value),
+        note: $('note').value,
+        date: new Date().toISOString()
+      };
+      
+      if (data.amount <= 0) {
+        alert('El monto debe ser mayor a 0');
+        return;
+      }
+      
+      saveMovement(data);
+      render();
+      e.target.reset();
+    });
+    
+    async function loadMovementsFromSheet() {
+      try {
+        const res = await fetch(SCRIPT_URL);
+        const json = await res.json();
+        appState.movements = json.movements.map(m => ({
+          date: new Date(m.date),
+          type: m.type,
+          amount: Number(m.amount),
+          note: m.note || '',
+          id: Date.now() + Math.random()
+        }));
+        render();
+      } catch (e) {
+        console.error('Error leyendo de Google Sheets:', e);
+      }
+    }
+    
+    loadMovementsFromSheet();
+  </script>
 </body>
 </html>
