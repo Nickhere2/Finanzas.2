@@ -77,18 +77,16 @@
     }
 
     function saveMovement(data) {
-      // Usar imagen beacon para bypass CORS
-      const url = APPS_SCRIPT_URL + '?' + new URLSearchParams({
+      const params = new URLSearchParams({
         fecha: data.fecha,
         tipo: data.tipo,
         monto: data.amount,
         nota: data.note
-      }).toString();
+      });
       
-      // Crear imagen beacon (no genera error de CORS)
       const img = new Image();
-      img.src = url;
-      img.onerror = () => console.log('Datos enviados al servidor');
+      img.src = APPS_SCRIPT_URL + '?' + params.toString();
+      img.onerror = () => console.log('Movimiento guardado');
     }
 
     function render() {
@@ -136,15 +134,12 @@
       const movement = { type, amount, note, fecha, date };
       movements.push(movement);
 
-      // Save to server
       saveMovement({ ...movement, amount: amount });
 
-      // Reset form
       this.reset();
       render();
     });
 
-    // Initial render
     render();
   </script>
 </body>
