@@ -66,8 +66,8 @@
   </div>
 
   <script>
-    // Google Form URL - REEMPLAZA CON TU URL DE FORM
-const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLScwfmJJ3H5QZmZx8n6D-CzVVmR9QzRnK5t8L_YQjPqCz0_UQ/formResponse';    
+    const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLScwfmJJ3H5QZmZx8n6D-CzVVmR9QzRnK5t8L_YQjPqCz0_UQ/formResponse';
+    
     const appState = {
       movements: []
     };
@@ -81,21 +81,15 @@ const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLScwfmJJ3H5QZmZ
     function saveMovement(data) {
       appState.movements.push({...data, id: Date.now()});
       
-      // Enviar a Google Form (NO usa fetch, evita CORS)
-      const formData = new FormData();
-      formData.append('entry.1234567890', data.date);      // Reemplaza con tu entry ID de Fecha
-      formData.append('entry.1234567891', data.type);      // Reemplaza con tu entry ID de Tipo
-      formData.append('entry.1234567892', data.amount);    // Reemplaza con tu entry ID de Monto
-      formData.append('entry.1234567893', data.note);      // Reemplaza con tu entry ID de Nota
-      
-      // Esto crea una imagen invisible que hace el submit (evita CORS)
+      // Enviar a Google Form
       const img = new Image();
-      img.src = GOOGLE_FORM_URL + '?' + new URLSearchParams({
-        'entry.1234567890': data.date,
-        'entry.1234567891': data.type,
-        'entry.1234567892': data.amount,
-        'entry.1234567893': data.note
-      }).toString();
+      const params = new URLSearchParams({
+        'entry.1932017625': data.date,
+        'entry.1989568890': data.type,
+        'entry.1401449176': data.amount,
+        'entry.1644138221': data.note
+      });
+      img.src = GOOGLE_FORM_URL + '?' + params.toString();
     }
     
     function render() {
