@@ -79,6 +79,8 @@
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         fecha: data.fecha,
+              type: data.type,
+              amount: data.amount,
         nota: data.note
       })
     }).catch(err => console.log('Sincronización:', err));
