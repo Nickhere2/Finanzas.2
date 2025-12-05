@@ -72,8 +72,7 @@
 
     function formatCurrency(amount) {
       return new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(amount);
-    }
-
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxFmdcb7mfEpMFA2zGwcDeH84YGtR1Cy-G9KDB9mU7hCfUKnc5RVgbpkC1pzMTEEcdCXg/exec';
     function saveMovement(data) {
     fetch(APPS_SCRIPT_URL, {
       method: 'POST',
